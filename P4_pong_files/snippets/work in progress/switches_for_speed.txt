@@ -1,0 +1,73 @@
+To make the sliding switches [SW3:SW0] control the speed, change the following two files:
+
+1) In pong.v there are two changes:
+
+First, change the first two lines to:
+
+module pong(clkin, vga_h_sync, vga_v_sync, btnL, btnR, LED, SSEG_CA, SSEG_AN, vgaRed, vgaBlue, vgaGreen, SW);
+input [15:0] SW;
+
+
+
+Second, replace Ball movement section with code below. Note that weird things tend to happen with ball_speed > 5:
+
+/////////////////////////////////////////////////////////////////
+// Ball movement section
+wire UpdateBallPosition = ResetCollision;  // update the ball position at the same time that we reset the collision detectors
+
+reg ball_dirX, ball_dirY;
+wire [4:0] ball_speed;
+assign ball_speed = SW[4:0];
+always @(posedge clk)
+if(UpdateBallPosition)
+begin
+	if(~(CollisionX1 & CollisionX2))        // if collision on both X-sides, don't move in the X direction
+	begin
+		ballX <= ballX + ball_speed * (ball_dirX ? -1 : 1);
+		if(CollisionX2) ball_dirX <= 1; else if(CollisionX1) ball_dirX <= 0;
+	end
+
+	if(~(CollisionY1 & CollisionY2))        // if collision on both Y-sides, don't move in the Y direction
+	begin
+		ballY <= ballY + ball_speed * (ball_dirY ? -1 : 1);
+		if(CollisionY2) ball_dirY <= 1; else if(CollisionY1) ball_dirY <= 0;
+	end
+end 
+
+
+2) in top.xdc add the following lines:
+
+
+# Switches
+set_property PACKAGE_PIN V17 [get_ports {SW[0]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[0]}]
+set_property PACKAGE_PIN V16 [get_ports {SW[1]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[1]}]
+set_property PACKAGE_PIN W16 [get_ports {SW[2]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[2]}]
+set_property PACKAGE_PIN W17 [get_ports {SW[3]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[3]}]
+set_property PACKAGE_PIN W15 [get_ports {SW[4]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[4]}]
+set_property PACKAGE_PIN V15 [get_ports {SW[5]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[5]}]
+set_property PACKAGE_PIN W14 [get_ports {SW[6]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[6]}]
+set_property PACKAGE_PIN W13 [get_ports {SW[7]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[7]}]
+set_property PACKAGE_PIN V2 [get_ports {SW[8]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[8]}]
+set_property PACKAGE_PIN T3 [get_ports {SW[9]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[9]}]
+set_property PACKAGE_PIN T2 [get_ports {SW[10]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[10]}]
+set_property PACKAGE_PIN R3 [get_ports {SW[11]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[11]}]
+set_property PACKAGE_PIN W2 [get_ports {SW[12]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[12]}]
+set_property PACKAGE_PIN U1 [get_ports {SW[13]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[13]}]
+set_property PACKAGE_PIN T1 [get_ports {SW[14]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[14]}]
+set_property PACKAGE_PIN R2 [get_ports {SW[15]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SW[15]}]

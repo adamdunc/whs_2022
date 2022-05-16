@@ -1,0 +1,22 @@
+Here are some examples to change the vga section:
+
+1) this will make the squares go away by commenting out the Counter parts. Then the color of the paddle and border will be green because of the if condition making R=0000,G=1111,B=0000.
+
+/////////////////////////////////////////////////////////////////
+// VGA Color section
+wire R = BouncingObject | ball;// | (CounterX[4] ^ CounterY[4]);
+wire G = BouncingObject | ball;
+wire B = BouncingObject | ball;
+
+reg vga_R, vga_G, vga_B;
+always @(posedge clk)
+begin
+	if (R & inDisplayArea) 
+	   vgaRed = 4'b0000; else vgaRed = 4'b0000;
+	if (G & inDisplayArea) 
+	   vgaGreen = 4'b1111; else vgaGreen = 4'b0000; 
+	if (B & inDisplayArea) 
+	   vgaBlue = 4'b0000; else vgaBlue = 4'b0000;
+end
+
+

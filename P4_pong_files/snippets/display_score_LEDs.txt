@@ -1,0 +1,7 @@
+locate Standard LED section and add following after the "// standard LED section" line:
+
+assign LED = score;
+
+
+
+

@@ -1,0 +1,42 @@
+# ##############################################################################
+
+# iCEcube PCF
+
+# Version:            2020.12.27943
+
+# File Generated:     May 11 2022 16:20:16
+
+# Family & Device:    iCE40HX8K
+
+# Package:            CB132
+
+# ##############################################################################
+
+###IOSet List 2
+set_io clkin P7 -io_std SB_LVCMOS
+set_io LED[7] N14 -io_std SB_LVCMOS
+set_io LED[6] M12 -io_std SB_LVCMOS
+set_io LED[5] L14 -io_std SB_LVCMOS
+set_io LED[4] L12 -io_std SB_LVCMOS
+set_io LED[3] K14 -io_std SB_LVCMOS
+set_io LED[2] K12 -io_std SB_LVCMOS
+set_io LED[1] K11 -io_std SB_LVCMOS
+set_io LED[0] J11 -io_std SB_LVCMOS
+set_io vgaRed M1 -io_std SB_LVCMOS
+set_io vgaBlue J1 -io_std SB_LVCMOS
+set_io vgaGreen G1 -io_std SB_LVCMOS
+set_io vga_h_sync E1 -io_std SB_LVCMOS
+set_io vga_v_sync C1 -io_std SB_LVCMOS
+set_io SSEG_CA[0] D3 -io_std SB_LVCMOS
+set_io SSEG_CA[1] A1 -io_std SB_LVCMOS
+set_io SSEG_CA[2] A3 -io_std SB_LVCMOS
+set_io SSEG_CA[3] A6 -io_std SB_LVCMOS
+set_io SSEG_CA[4] A10 -io_std SB_LVCMOS
+set_io SSEG_CA[5] C9 -io_std SB_LVCMOS
+set_io SSEG_CA[6] A12 -io_std SB_LVCMOS
+set_io SSEG_CA[7] C14 -io_std SB_LVCMOS
+set_io SSEG_AN[0] E14 -io_std SB_LVCMOS
+set_io SSEG_AN[1] F14 -io_std SB_LVCMOS
+set_io SSEG_AN[2] H12 -io_std SB_LVCMOS
+set_io btnL P2 -io_std SB_LVCMOS -pullup yes
+set_io btnR M3 -io_std SB_LVCMOS -pullup yes

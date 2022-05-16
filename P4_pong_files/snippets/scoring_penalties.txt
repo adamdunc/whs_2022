@@ -1,0 +1,18 @@
+to create a scoring penalty for letting the ball hit the bottom of the border, change scoring section to below:
+
+//////////////////////////////////////////////////////////////////
+// Score calculation section
+reg PaddleCollision = 0;
+always @(posedge clk) if(ResetCollision) PaddleCollision<=0; else if(paddle & (CounterX==ballX+ 8) & (CounterY==ballY+16)) PaddleCollision<=1;
+
+reg [15:0] score = 0;
+always @ (posedge ResetCollision)
+begin
+    if (PaddleCollision & ~ball_dirY)
+    begin
+        score <= score + 1;
+    end
+    else if ((CollisionY2 == 1) & ~ball_dirY)
+        if (score > 0)
+            score <= score - 1;
+end

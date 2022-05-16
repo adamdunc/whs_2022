@@ -1,0 +1,3 @@
+find line "wire paddle = (CounterX>=PaddlePosition+8) && (CounterX<=PaddlePosition+120) && (CounterY[8:4]==27);"
+
+change the 120 to a different value

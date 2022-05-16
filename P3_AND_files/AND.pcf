@@ -1,0 +1,22 @@
+# ##############################################################################
+
+# iCEcube PCF
+
+# Version:            2020.12.27943
+
+# File Generated:     May 11 2022 16:20:16
+
+# Family & Device:    iCE40HX8K
+
+# Package:            CB132
+
+# ##############################################################################
+
+###IOSet List 2
+set_io B1 P2 -io_std SB_LVCMOS -pullup yes
+set_io B0 M3 -io_std SB_LVCMOS -pullup yes
+## add LEDs
+set_io LED2 K12 -io_std SB_LVCMOS
+set_io LED1 K11 -io_std SB_LVCMOS
+set_io LED0 J11 -io_std SB_LVCMOS
+

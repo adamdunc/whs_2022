@@ -1,0 +1,21 @@
+change/swap the btnL and btnR in the section below below:
+
+/////////////////////////////////////////////////////////////////
+// Paddle control section
+reg [8:0] PaddlePosition;
+
+always @(posedge slow_clk)
+begin
+    if (btnL)
+        begin
+        if(~&PaddlePosition) // make sure the value doesn't overflow
+            PaddlePosition <= PaddlePosition + 1;
+        end
+    else if (btnR)
+        begin
+        if(|PaddlePosition)        // make sure the value doesn't underflow
+			PaddlePosition <= PaddlePosition - 1;
+		end
+end
+
+

@@ -1,0 +1,7 @@
+Locate ball movement section and change: 
+
+reg [4:0] ball_speed = 1;
+
+to something larger like 
+
+reg [4:0] ball_speed = 5;

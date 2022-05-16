@@ -1,0 +1,18 @@
+Find VGA color section as below and change the vgaRed, vgaGreen, vgaBlue values from 4'b1111 to another value. For information on what the RGB values mean, See https://reference.digilentinc.com/basys3/refmanual. i.e., to increase the size of the background blocks, change the indices in the (CounterX[4] ^ CounterY[4]) to something bigger like (CounterX[5] ^ CounterY[5]).
+
+/////////////////////////////////////////////////////////////////
+// VGA Color section
+wire R = BouncingObject | ball | (CounterX[4] ^ CounterY[4]);
+wire G = BouncingObject | ball;
+wire B = BouncingObject | ball;
+
+reg vga_R, vga_G, vga_B;
+always @(posedge clk)
+begin
+	if (R & inDisplayArea) 
+	   vgaRed = 4'b1111; else vgaRed = 4'b0000;
+	if (G & inDisplayArea) 
+	   vgaGreen = 4'b1111; else vgaGreen = 4'b0000; 
+	if (B & inDisplayArea) 
+	   vgaBlue = 4'b1111; else vgaBlue = 4'b0000;
+end

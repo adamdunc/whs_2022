@@ -1,0 +1,63 @@
+Add following section before endmodule line:
+
+Note that this also involves wiring up a seven segment LED to the FPGA
+
+//////////////////////////////////////////////////////////////////
+// 7 segment LED section
+reg [19:0] refresh_counter; 
+// the first 18-bit for creating 2.6ms digit period
+// the other 2-bit for creating 4 LED-activating signals
+
+wire [1:0] LED_activating_counter; 
+// count        0    ->  1  ->  2  ->  3
+// activates    LED1    LED2   LED3   LED4
+// and repeat
+always @(posedge clkin)
+begin 
+  refresh_counter <= refresh_counter + 1;
+end 
+assign LED_activating_counter = refresh_counter[19:18];
+
+reg [3:0] LED_BCD;
+
+// anode activating signals for 4 LEDs, digit period of 2.6ms
+    // decoder to generate anode signals 
+    always @(refresh_counter)
+    begin
+        case(LED_activating_counter)
+        2'b00: begin
+            SSEG_AN = 4'b0111; // activate LED1 and Deactivate LED2, LED3, LED4
+            LED_BCD = score/1000; // the first digit of the 16-bit number
+              end
+        2'b01: begin
+            SSEG_AN = 4'b1011; // activate LED2 and Deactivate LED1, LED3, LED4
+            LED_BCD = (score % 1000)/100; // the second digit of the 16-bit number
+              end
+        2'b10: begin
+            SSEG_AN = 4'b1101; // activate LED3 and Deactivate LED2, LED1, LED4
+            LED_BCD = ((score % 1000)%100)/10; // the third digit of the 16-bit number
+                end
+        2'b11: begin
+            SSEG_AN = 4'b1110; // activate LED4 and Deactivate LED2, LED3, LED1
+            LED_BCD = ((score % 1000)%100)%10; // the fourth digit of the 16-bit number    
+               end
+        endcase
+    end
+
+always @ (*) begin
+    //SSEG_AN = 4'b1110; // 0 means "on" for anode circuitry
+    case (LED_BCD[3:0]) //case statement
+    0 : SSEG_CA = 8'b01000000; // 0 also means "on" for 7 segment cathodes
+    1 : SSEG_CA = 8'b01111001;
+    2 : SSEG_CA = 8'b00100100;
+    3 : SSEG_CA = 8'b00110000;
+    4 : SSEG_CA = 8'b00011001;
+    5 : SSEG_CA = 8'b00010010;
+    6 : SSEG_CA = 8'b00000010;
+    7 : SSEG_CA = 8'b01111000;
+    8 : SSEG_CA = 8'b00000000;
+    9 : SSEG_CA = 8'b00010000;
+    //switch off 7 segment character when the bcd digit is not a decimal number.
+    default : SSEG_CA = 8'b01000000;   
+    endcase   
+end
